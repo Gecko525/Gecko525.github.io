@@ -6,16 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://gecko525.github.io">
-  <title>Archives: 2019 | gecko_wu 个人博客</title>
+  <title>session和jwt鉴权 | gecko_wu 个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="博客 前端 javascript">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gecko_wu 个人博客">
-<meta property="og:url" content="http://gecko525.github.io/archives/2019/index.html">
+  <meta name="description" content="前言由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="session和jwt鉴权">
+<meta property="og:url" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/index.html">
 <meta property="og:site_name" content="gecko_wu 个人博客">
+<meta property="og:description" content="前言由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt流程.png">
+<meta property="og:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt结构.webp">
+<meta property="og:updated_time" content="2020-03-24T04:24:55.276Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gecko_wu 个人博客">
+<meta name="twitter:title" content="session和jwt鉴权">
+<meta name="twitter:description" content="前言由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。">
+<meta name="twitter:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt流程.png">
   
     <link rel="alternative" href="/atom.xml" title="gecko_wu 个人博客" type="application/atom+xml">
   
@@ -133,36 +140,111 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-session和jwt鉴权" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/10/12/javascript之宏任务与微任务/" class="archive-article-date">
-  	<time datetime="2019-10-12T13:45:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-12</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/10/12/javascript之宏任务与微任务/">javascript之宏任务与微任务</a>
+    <h1 class="article-title" itemprop="name">
+      session和jwt鉴权
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/03/24/session和jwt鉴权/" class="archive-article-date">
+  	<time datetime="2020-03-24T03:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。</p>
+<a id="more"></a>
+<h3 id="传统的cookie-session鉴权"><a href="#传统的cookie-session鉴权" class="headerlink" title="传统的cookie-session鉴权"></a>传统的cookie-session鉴权</h3><p>session 是一种服务器机制，是存储在服务器上的信息。存储方式多种多样，可以是服务器内存中，或者是mongo数据库，redis内存数据库中。而session是基于cookie实现的，服务器会生成sessionID，通过set-cookie的方式写入到客户端的cookie中。客户端每次请求都会自动携带服务器写入sessionID的cookie发送给服务端，通过解析cookie中的sessionID与服务端保存的session来判断用户是否登录。</p>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>session通常放在内存中，用户数量如果过大会对服务器产生压力</p>
+<p>扩展性。 哪怕session以文件形式保存，放在redis中。对于分布式系统来说会产生高流量的数据读取（文件同步读取问题）</p>
+<h3 id="JWT鉴权"><a href="#JWT鉴权" class="headerlink" title="JWT鉴权"></a>JWT鉴权</h3><h4 id="什么是JWT（Json-web-token）"><a href="#什么是JWT（Json-web-token）" class="headerlink" title="什么是JWT（Json web token）?"></a>什么是JWT（Json web token）?</h4><p>Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</p>
+<h4 id="JWT鉴权的流程"><a href="#JWT鉴权的流程" class="headerlink" title="JWT鉴权的流程"></a>JWT鉴权的流程</h4><p><img src="jwt流程.png" alt="jwt流程"></p>
+<ol>
+<li>客户端通过post请求请求服务端登录认证接口</li>
+<li>服务端用秘密创建JWT</li>
+<li>服务端将JWT返回浏览器</li>
+<li>客户端在授权报头上发送JWT</li>
+<li>服务端检查JWT签名从JWT获取用户信息</li>
+<li>服务端向客户端发送响应</li>
+</ol>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>服务器不需要存储session，节省内存开支</p>
+<p>结构简单，占用资源少</p>
+<p>JSON格式，可以兼容多种语言</p>
+<h4 id="JWT结构分析"><a href="#JWT结构分析" class="headerlink" title="JWT结构分析"></a>JWT结构分析</h4><p><img src="jwt结构.webp" alt="jwt结构"></p>
+<p>JWT由三个部分构成，用英文句点分割(.) 。分为</p>
+<ol>
+<li><strong>Header</strong>(头信息)。通常包含两部分，type：代表token的类型，这里使用的是JWT类型。 alg:代表使用的算法，例如HMAC SHA256或RSA.</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 这会被经过base64Url编码形成第一部分</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"alg"</span>: <span class="string">"HS256"</span>,</span><br><span class="line">	<span class="attr">"typ"</span>: <span class="string">"JWT"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p><strong>Payload</strong>(载荷信息，实际数据)。一个token的第二部分是荷载信息，它包含一些声明Claim（实体的描述，例：用户信息和其他的一些元数据）</p>
+<p>声明分为三类： <strong>标准字段</strong>（一套预定义的声明，并不是必须的,这是一套易于使用、操作性强的声明），<strong>公共字段</strong>，<strong>私有字段</strong></p>
+<p>标准字段：</p>
+<p>​      <strong>iss</strong>: JWT签发者</p>
+<p>​      <strong>sub</strong>: JWT所面向的用户</p>
+<p>​      <strong>aud</strong>: 接收JWT的一方</p>
+<p>​      <strong>exp</strong>: JWT的过期时间，这个过期时间必须要大于签发时间</p>
+<p>​      <strong>nbf</strong>: 定义在什么时间之前，该JWT都是不可用的.</p>
+<p>​      <strong>iat</strong>: JWT的签发时间</p>
+<p>​      <strong>jti</strong>: JWT的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</p>
+</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//同样经过Base64Url编码后形成第二部分</span><br><span class="line">&#123;</span><br><span class="line">	<span class="attr">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">	<span class="attr">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">	<span class="attr">"iat"</span>: <span class="number">1516239022</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><p><strong>Signature</strong>(由头信息+荷载信息+密钥 组合之后进行加密得到) 。使用header中指定的算法将编码后的header、编码后的payload、一个secret进行加密</p>
+<p>例如使用的是HMAC SHA256算法，大致流程类似于: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HMACSHA256( base64UrlEncode(header) + <span class="string">"."</span> + base64UrlEncode(payload), secret)</span><br></pre></td></tr></table></figure>
+<p>这个signature字段被用来确认JWT信息的发送者是谁，并保证信息没有被修改</p>
+</li>
+</ol>
+<h4 id="JWT校验真伪"><a href="#JWT校验真伪" class="headerlink" title="JWT校验真伪"></a>JWT校验真伪</h4><ol>
+<li>服务器收到JWT</li>
+<li>将header和payload 用秘钥和对应的算法生成签名</li>
+<li>判断生成的签名和jwt的第三部分是否一致</li>
+<li>一致则代表可信，不一致则返回错误</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/dashang.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -174,133 +256,37 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/04/15/文本溢出显示省略号/" class="archive-article-date">
-  	<time datetime="2019-04-15T08:27:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-15</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/15/文本溢出显示省略号/">文本溢出显示省略号</a>
-    </h1>
+  
+    <a href="/2019/10/12/javascript之宏任务与微任务/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">javascript之宏任务与微任务</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/18/css设置滚动条样式/" class="archive-article-date">
-  	<time datetime="2019-01-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/18/css设置滚动条样式/">css设置滚动条样式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/01/05/vue递归组件/" class="archive-article-date">
-  	<time datetime="2019-01-04T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/01/05/vue递归组件/">vue递归组件</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">vue</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -323,8 +309,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
