@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="gecko_wu 个人博客">
 <meta property="og:description" content="滚动条可以分为几个部分：滑块、轨道、横竖交界、两端按钮，可通过css修改默认样式">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://gecko525.github.io/2019/01/18/css设置滚动条样式/scrollbar1.png">
-<meta property="og:image" content="http://gecko525.github.io/2019/01/18/css设置滚动条样式/scrollbar.png">
-<meta property="og:updated_time" content="2020-01-08T13:41:48.720Z">
+<meta property="og:image" content="http://gecko525.github.io/images/css设置滚动条样式/scrollbar1.png">
+<meta property="og:image" content="http://gecko525.github.io/images/css设置滚动条样式/scrollbar.png">
+<meta property="og:updated_time" content="2020-03-25T03:32:10.045Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="css设置滚动条样式">
 <meta name="twitter:description" content="滚动条可以分为几个部分：滑块、轨道、横竖交界、两端按钮，可通过css修改默认样式">
-<meta name="twitter:image" content="http://gecko525.github.io/2019/01/18/css设置滚动条样式/scrollbar1.png">
+<meta name="twitter:image" content="http://gecko525.github.io/images/css设置滚动条样式/scrollbar1.png">
   
     <link rel="alternative" href="/atom.xml" title="gecko_wu 个人博客" type="application/atom+xml">
   
@@ -63,7 +63,7 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="../../../../index.html">主页</a></li>
 	        
 			</ul>
 		</nav>
@@ -125,7 +125,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 100%"><a href="../../../../index.html">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -152,7 +152,7 @@
   
 
         
-        <a href="/2019/01/18/css设置滚动条样式/" class="archive-article-date">
+        <a href class="archive-article-date">
   	<time datetime="2019-01-17T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-01-18</time>
 </a>
         
@@ -162,11 +162,10 @@
       
         <p>滚动条可以分为几个部分：滑块、轨道、横竖交界、两端按钮，可通过css修改默认样式</p>
 <a id="more"></a>
-<h6 id="滚动条图解"><a href="#滚动条图解" class="headerlink" title="滚动条图解"></a>滚动条图解</h6><p><img src="scrollbar1.png" alt="scrollbar1"></p>
+<h6 id="滚动条图解"><a href="#滚动条图解" class="headerlink" title="滚动条图解"></a>滚动条图解</h6><p><img src="/images/css设置滚动条样式/scrollbar1.png" alt="scrollbar1"></p>
 <h6 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">::-webkit-scrollbar 	滚动条整体部分</span><br><span class="line">::-webkit-scrollbar-thumb  	滚动条里面的小方块（滑块），能上下或左右移动</span><br><span class="line">::-webkit-scrollbar-track  	滚动条的轨道（里面装有滑块）</span><br><span class="line">::-webkit-scrollbar-button 	滚动条的轨道的两端按钮，允许通过点击微调小方块的位置。</span><br><span class="line">::-webkit-scrollbar-track-piece 除去滑块的轨道部分</span><br><span class="line">::-webkit-scrollbar-corner 	边角，即两个滚动条的交汇处</span><br><span class="line">::-webkit-resizer 	两个滚动条的交汇处上用于通过拖动调整元素大小的小控件</span><br></pre></td></tr></table></figure>
 <h6 id="css样式示例"><a href="#css样式示例" class="headerlink" title="css样式示例"></a>css样式示例</h6><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 可滚动区域 */</span></span><br><span class="line"><span class="selector-class">.scroll</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 滚动条整体 */</span></span><br><span class="line"><span class="selector-class">.scroll</span><span class="selector-pseudo">::-webkit-scrollbar</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>:<span class="number">12px</span>;</span><br><span class="line">  <span class="attribute">height</span>:<span class="number">12px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 轨道 */</span></span><br><span class="line"><span class="selector-class">.scroll</span><span class="selector-pseudo">::-webkit-scrollbar-track</span>&#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#f2f558</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>:<span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 滑块 */</span></span><br><span class="line"><span class="selector-class">.scroll</span><span class="selector-pseudo">::-webkit-scrollbar-thumb</span>&#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#409eff</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>:<span class="number">10px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 滑块hover */</span></span><br><span class="line"><span class="selector-class">.scroll</span><span class="selector-pseudo">::-webkit-scrollbar-thumb</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#f00</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 横竖交界 */</span></span><br><span class="line"><span class="selector-class">.scroll</span><span class="selector-pseudo">::-webkit-scrollbar-corner</span>&#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#179a16</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>效果如下：</p>
-<p><img src="scrollbar.png" alt="scrollbar"></p>
+<p><img src="/images/css设置滚动条样式/scrollbar.png" alt="scrollbar"></p>
 
       
 
@@ -225,7 +224,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/04/15/文本溢出显示省略号/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="../../../04/15/文本溢出显示省略号/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -235,7 +234,7 @@
     </a>
   
   
-    <a href="/2019/01/05/vue递归组件/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../05/vue递归组件/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">vue递归组件</div>
       <i class="icon-circle-right"></i>
     </a>

@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="gecko_wu 个人博客">
 <meta property="og:description" content="前言由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt流程.png">
-<meta property="og:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt结构.webp">
-<meta property="og:updated_time" content="2020-03-24T04:24:55.276Z">
+<meta property="og:image" content="http://gecko525.github.io/images/session和jwt鉴权/jwt流程.png">
+<meta property="og:image" content="http://gecko525.github.io/images/session和jwt鉴权/jwt结构.webp">
+<meta property="og:updated_time" content="2020-03-25T03:52:01.373Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="session和jwt鉴权">
 <meta name="twitter:description" content="前言由于http是一种无状态协议，即http协议对于交互场景没有记忆能力，因此需要一种方式能让服务器知道是谁在访问，于是传统的cookie-session鉴权和JWT鉴权等方式应运而生。">
-<meta name="twitter:image" content="http://gecko525.github.io/2020/03/24/session和jwt鉴权/jwt流程.png">
+<meta name="twitter:image" content="http://gecko525.github.io/images/session和jwt鉴权/jwt流程.png">
   
     <link rel="alternative" href="/atom.xml" title="gecko_wu 个人博客" type="application/atom+xml">
   
@@ -63,7 +63,7 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="/">主页</a></li>
+				<li><a href="../../../../index.html">主页</a></li>
 	        
 			</ul>
 		</nav>
@@ -125,7 +125,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 100%"><a href="/">主页</a></li>
+					<li style="width: 100%"><a href="../../../../index.html">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -152,7 +152,7 @@
   
 
         
-        <a href="/2020/03/24/session和jwt鉴权/" class="archive-article-date">
+        <a href class="archive-article-date">
   	<time datetime="2020-03-24T03:16:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-24</time>
 </a>
         
@@ -166,7 +166,7 @@
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>session通常放在内存中，用户数量如果过大会对服务器产生压力</p>
 <p>扩展性。 哪怕session以文件形式保存，放在redis中。对于分布式系统来说会产生高流量的数据读取（文件同步读取问题）</p>
 <h3 id="JWT鉴权"><a href="#JWT鉴权" class="headerlink" title="JWT鉴权"></a>JWT鉴权</h3><h4 id="什么是JWT（Json-web-token）"><a href="#什么是JWT（Json-web-token）" class="headerlink" title="什么是JWT（Json web token）?"></a>什么是JWT（Json web token）?</h4><p>Json web token (JWT), 是为了在网络应用环境间传递声明而执行的一种基于JSON的开放标准（(RFC 7519).该token被设计为紧凑且安全的，特别适用于分布式站点的单点登录（SSO）场景。JWT的声明一般被用来在身份提供者和服务提供者间传递被认证的用户身份信息，以便于从资源服务器获取资源，也可以增加一些额外的其它业务逻辑所必须的声明信息，该token也可直接被用于认证，也可被加密。</p>
-<h4 id="JWT鉴权的流程"><a href="#JWT鉴权的流程" class="headerlink" title="JWT鉴权的流程"></a>JWT鉴权的流程</h4><p><img src="jwt流程.png" alt="jwt流程"></p>
+<h4 id="JWT鉴权的流程"><a href="#JWT鉴权的流程" class="headerlink" title="JWT鉴权的流程"></a>JWT鉴权的流程</h4><p><img src="/images/session和jwt鉴权/jwt流程.png" alt="jwt流程"></p>
 <ol>
 <li>客户端通过post请求请求服务端登录认证接口</li>
 <li>服务端用秘密创建JWT</li>
@@ -178,7 +178,7 @@
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>服务器不需要存储session，节省内存开支</p>
 <p>结构简单，占用资源少</p>
 <p>JSON格式，可以兼容多种语言</p>
-<h4 id="JWT结构分析"><a href="#JWT结构分析" class="headerlink" title="JWT结构分析"></a>JWT结构分析</h4><p><img src="jwt结构.webp" alt="jwt结构"></p>
+<h4 id="JWT结构分析"><a href="#JWT结构分析" class="headerlink" title="JWT结构分析"></a>JWT结构分析</h4><p><img src="/images/session和jwt鉴权/jwt结构.webp" alt="jwt结构"></p>
 <p>JWT由三个部分构成，用英文句点分割(.) 。分为</p>
 <ol>
 <li><strong>Header</strong>(头信息)。通常包含两部分，type：代表token的类型，这里使用的是JWT类型。 alg:代表使用的算法，例如HMAC SHA256或RSA.</li>
@@ -270,7 +270,7 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/10/12/javascript之宏任务与微任务/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="../../../../2019/10/12/javascript之宏任务与微任务/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">javascript之宏任务与微任务</div>
       <i class="icon-circle-right"></i>
     </a>
