@@ -6,16 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://gecko525.github.io">
-  <title>Archives: 2019/4 | gecko_wu 个人博客</title>
+  <title>js浮点数计算精度丢失 | gecko_wu 个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="博客 前端 javascript">
-<meta property="og:type" content="website">
-<meta property="og:title" content="gecko_wu 个人博客">
-<meta property="og:url" content="http://gecko525.github.io/archives/2019/04/index.html">
+  <meta name="description" content="前言js在计算浮点数时会出现精度误差问题，典型场景是计算金额。">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js浮点数计算精度丢失">
+<meta property="og:url" content="http://gecko525.github.io/2020/04/05/js浮点数计算精度丢失/index.html">
 <meta property="og:site_name" content="gecko_wu 个人博客">
+<meta property="og:description" content="前言js在计算浮点数时会出现精度误差问题，典型场景是计算金额。">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://gecko525.github.io/images/js浮点数计算精度丢失/lizi.png">
+<meta property="og:updated_time" content="2020-04-05T14:52:49.434Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gecko_wu 个人博客">
+<meta name="twitter:title" content="js浮点数计算精度丢失">
+<meta name="twitter:description" content="前言js在计算浮点数时会出现精度误差问题，典型场景是计算金额。">
+<meta name="twitter:image" content="http://gecko525.github.io/images/js浮点数计算精度丢失/lizi.png">
   
     <link rel="alternative" href="/atom.xml" title="gecko_wu 个人博客" type="application/atom+xml">
   
@@ -56,7 +62,7 @@
 		<nav class="header-menu">
 			<ul>
 			
-				<li><a href="../../../index.html">主页</a></li>
+				<li><a href="../../../../index.html">主页</a></li>
 	        
 			</ul>
 		</nav>
@@ -118,7 +124,7 @@
 				<ul style="width: 50%">
 				
 				
-					<li style="width: 100%"><a href="../../../index.html">主页</a></li>
+					<li style="width: 100%"><a href="../../../../index.html">主页</a></li>
 		        
 				</ul>
 			</nav>
@@ -133,60 +139,118 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-js浮点数计算精度丢失" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href=".." class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="../../../2019/04/15/文本溢出显示省略号/" class="archive-article-date">
-  	<time datetime="2019-04-15T08:27:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-15</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="../../../2019/04/15/文本溢出显示省略号/">文本溢出显示省略号</a>
+    <h1 class="article-title" itemprop="name">
+      js浮点数计算精度丢失
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href class="archive-article-date">
+  	<time datetime="2020-04-05T13:32:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-05</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>js在计算浮点数时会出现精度误差问题，典型场景是计算金额。</p>
+<a id="more"></a>
+<p><img src="/images/js浮点数计算精度丢失/lizi.png" alt="lizi" style="zoom:50%;"></p>
+<p>测试实例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="number">0.1</span>+<span class="number">0.2</span>); <span class="comment">//0.30000000000000004</span></span><br></pre></td></tr></table></figure>
+<p>对于浮点数的四则运算（加减乘除），几乎所有的编程语言都会出现上面类似的精度误差问题，只是大部分语言都处理封装了避免误差的方法。对于js而言，由于它是一门弱类型的语言，所以并没有对浮点数的运算有解决的封装方法，这能我们自己来解决</p>
+<h3 id="精度丢失原理"><a href="#精度丢失原理" class="headerlink" title="精度丢失原理"></a>精度丢失原理</h3><p>计算机在运算的时候会先将10进制数字转换为二进制，计算完成后再转成10进制。</p>
+<p>我们先把0.1和0.2转换为二进制：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.1</span> =&gt; <span class="number">0.0001</span> <span class="number">1001</span> <span class="number">1001</span> <span class="number">1001.</span>.（无限循环）</span><br><span class="line"></span><br><span class="line"><span class="number">0.2</span> =&gt; <span class="number">0.0011</span> <span class="number">0011</span> <span class="number">0011</span> <span class="number">0011</span>…（无限循环）</span><br></pre></td></tr></table></figure>
+<p>这里可以看出转换为二进制是一个无限循环的数字，<strong>单在计算机中对于无限循环的数字会进行舍入处理的，进行双精度浮点数的小数部分最多支持52位。然后把两个二进制的数进行运算得出的也是一个二进制数值，最后再把它转换为十进制</strong>。保留17位小数，所以0.1+0.2的值就成了 0.30000000000000004。 0.1+0.1的值成了0.20000000000000000，全是0的时候可以省略，就成了0.2。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><h4 id="toFixed方法"><a href="#toFixed方法" class="headerlink" title="toFixed方法"></a>toFixed方法</h4><p>最简单的处理，通过<code>toFixed</code>方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">parseFloat</span>((<span class="number">0.1</span>+<span class="number">0.2</span>).toFixed(<span class="number">1</span>))); <span class="comment">//0.3</span></span><br></pre></td></tr></table></figure>
+<p><code>toFixed</code>方法可以传入保留小数的位数，只适合所有计算数和结果都保持相同小数位数的运算。</p>
+<h4 id="Math-round方法"><a href="#Math-round方法" class="headerlink" title="Math.round方法"></a>Math.round方法</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Math</span>.formatFloat = <span class="function"><span class="keyword">function</span> (<span class="params">f, digit</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> m = <span class="built_in">Math</span>.pow(<span class="number">10</span>, digit);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.round(f * m, <span class="number">10</span>) / m;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> s = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Math</span>.formatFloat(s, <span class="number">1</span>)) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
+<h4 id="整数转换方法"><a href="#整数转换方法" class="headerlink" title="整数转换方法"></a>整数转换方法</h4><p>原理是先将小数转换成整数，计算完成后再转换成小数。加减乘除都可以，下面以加法为例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">accAdd</span>(<span class="params">arg1, arg2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> r1, r2, m;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        r1 = arg1.toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">        r1 = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        r2 = arg2.toString().split(<span class="string">"."</span>)[<span class="number">1</span>].length;</span><br><span class="line">    &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">        r2 = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    m = <span class="built_in">Math</span>.pow(<span class="number">10</span>, <span class="built_in">Math</span>.max(r1, r2));</span><br><span class="line">    <span class="keyword">return</span> (arg1 * m + arg2 * m) / m;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(accAdd(<span class="number">0.1</span>, <span class="number">0.2</span>)) <span class="comment">// 0.3</span></span><br></pre></td></tr></table></figure>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/dashang.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">js</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="../../../03/24/session和jwt鉴权/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">session和jwt鉴权</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -209,8 +273,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
